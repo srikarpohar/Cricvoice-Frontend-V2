@@ -1,0 +1,17 @@
+{
+  "short_name": "CricVoice",
+  "name": "CricVoice",
+  "icons": [{
+    "src": "cricvoice-dark-logo.png",
+    "type": "image/png",
+    "sizes": "615x140"
+  }, {
+    "src": "cricvoice-logo.png",
+    "type": "image/png",
+    "sizes": "615x135"
+  }],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
