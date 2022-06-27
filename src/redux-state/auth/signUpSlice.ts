@@ -1,4 +1,4 @@
-import { IAction, ISignUpStoreState } from '../stateModels';
+import { ISignUpStoreState } from '../stateModels';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialUserState:ISignUpStoreState = {user: null, isSignedUp: undefined, errorMessage: ''};
@@ -7,11 +7,11 @@ export const signUpSlice = createSlice({
     name: 'signup',
     initialState: initialUserState,
     reducers: {
-        signUpUser: (state: ISignUpStoreState, action: IAction) => {
-            return {...state, user: action.payload, isSignedUp: true};
+        signUpUser: (state: ISignUpStoreState, payload: any) => {
+            return {...state, user: payload, isSignedUp: true};
         },
-        errorOnSigningUpUser: (state: ISignUpStoreState, action: IAction) => {
-            return {...state, user: null, isSignedUp: false, errorMessage: action.payload};
+        errorOnSigningUpUser: (state: ISignUpStoreState, payload: any) => {
+            return {...state, user: null, isSignedUp: false, errorMessage: payload};
         },
     }
 });

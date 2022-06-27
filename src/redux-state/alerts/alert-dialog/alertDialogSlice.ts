@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IAction, IAlertDialogStoreState } from "../../stateModels";
+import { IAlertDialogStoreState } from "../../stateModels";
 
 const initialState:IAlertDialogStoreState = {key: '', open: false, message: '', type: null};
 
@@ -7,11 +7,11 @@ export const alertSlice = createSlice({
     name: 'alerts',
     initialState: initialState,
     reducers: {
-        showDialog: (state: IAlertDialogStoreState, action: IAction) => {
-            return {...state, key: action.payload.key, open: true, message: action.payload.message, type: action.payload.type};
+        showDialog: (state: IAlertDialogStoreState, payload: any) => {
+            return {...state, key: payload.key, open: true, message: payload.message, type: payload.type};
         },
-        closeDialog: (state: IAlertDialogStoreState, action: IAction) => {
-            return {...state, key: action.payload.key, open: false};
+        closeDialog: (state: IAlertDialogStoreState, payload: any) => {
+            return {...state, key: payload.key, open: false};
         }
     }
 });

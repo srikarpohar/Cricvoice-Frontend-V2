@@ -1,11 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 // reducers
-import loginReducer from './login/loginSlice';
-import signUpReducer from './signup/signUpSlice';
+import loginReducer from './auth/loginSlice';
+import signUpReducer from './auth/signUpSlice';
 import userPreferencesReducer from './preferences/preferencesSlice';
 import alertDialogReducer from './alerts/alert-dialog/alertDialogSlice';
 import toastReducer from './alerts/toast/toastSlice';
+import { baseApiSlice } from './commonApiSlice';
 
 
 const rootReducer = combineReducers({
@@ -13,11 +14,13 @@ const rootReducer = combineReducers({
     signup: signUpReducer,
     preferences: userPreferencesReducer,
     alertDialog: alertDialogReducer,
-    toast: toastReducer
+    toast: toastReducer,
+    [baseApiSlice.reducerPath]: baseApiSlice.reducer
 });
 
 export const store = configureStore({
-    reducer: rootReducer
+    reducer: rootReducer,
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(baseApiSlice.middleware)
 });
 
 export type AppDispatch = typeof store.dispatch;

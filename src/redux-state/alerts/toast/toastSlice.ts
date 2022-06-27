@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IAction, IToastStoreState } from "../../stateModels";
+import { IToastStoreState } from "../../stateModels";
 
 const initialState:IToastStoreState = {key: '', open: false, type: null, message: ''};
 
@@ -7,11 +7,11 @@ export const toastSlice = createSlice({
     name: 'toast',
     initialState: initialState,
     reducers: {
-        showToast: (state: IToastStoreState, action: IAction) => {
-            return {...state, key: action.payload.key, open: true, message: action.payload.message, type: action.payload.type};
+        showToast: (state: IToastStoreState, payload: any) => {
+            return {...state, key: payload.key, open: true, message: payload.message, type: payload.type};
         },
-        closeToast: (state: IToastStoreState, action: IAction) => {
-            return {...state, key: action.payload.key, open: false};
+        closeToast: (state: IToastStoreState, payload: any) => {
+            return {...state, key: payload.key, open: false};
         },
     }
 });
