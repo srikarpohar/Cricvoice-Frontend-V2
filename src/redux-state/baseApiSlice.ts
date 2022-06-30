@@ -5,6 +5,29 @@ import { BaseQueryApi } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import { IResponse, IUser } from "../models";
 import { loginUser, logoutUser } from "./auth/loginSlice";
 
+const createFetchWithTimeout = (timeout: number) => async (
+    input: RequestInfo,
+    init?: RequestInit
+) => {
+    if (init?.signal) {
+        throw new Error(
+            "it looks like graphql-request started using AbortSignal on its own. Please check graphql-request's recent updates"
+        );
+    }
+
+    const controller = new AbortController();
+
+    const timerId = setTimeout(() => {
+        controller.abort();
+    }, timeout);
+
+    try {
+        return await fetch(input, { ...init, signal: controller.signal });
+    } finally {
+        clearTimeout(timerId);
+    }
+};
+
 export const baseQuery = fetchBaseQuery({
     baseUrl: SERVER_URL,
     prepareHeaders: (headers: Headers, { getState, endpoint }) => {
@@ -18,7 +41,8 @@ export const baseQuery = fetchBaseQuery({
         }
 
         return headers;
-    }
+    },
+    fetchFn: createFetchWithTimeout(100000)
 });
 
 export const baseQueryReAuth = async (args: FetchArgs, api: BaseQueryApi, extraOptions: any) => {
@@ -46,6 +70,7 @@ export const baseQueryReAuth = async (args: FetchArgs, api: BaseQueryApi, extraO
 
 export const baseApiSlice = createApi({
     reducerPath: 'baseApi',
+    tagTypes: ['Auth'],
     baseQuery: baseQueryReAuth,
     endpoints: (builder) => ({})
 });

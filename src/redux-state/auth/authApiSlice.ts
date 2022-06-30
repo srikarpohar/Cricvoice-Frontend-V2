@@ -1,13 +1,12 @@
-import { FetchArgs } from "@reduxjs/toolkit/dist/query";
 import { BaseQueryApi } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import { IResponse, IUser } from "../../models";
-import { baseApiSlice } from "../commonApiSlice";
+import { baseApiSlice } from "../baseApiSlice";
 
 export const authSlice = baseApiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        signUpUser: builder.query<IResponse, void>({
+        signUpUser: builder.mutation<IResponse, void>({
             // args: IUser
-            queryFn: async (args: any, api: BaseQueryApi, extraOptions: any, baseQuery: any) => {
+            queryFn: async (args: any, _api: BaseQueryApi, _extraOptions: any, baseQuery: any) => {
                 const { profilePic, ...userData } = args;
         
                 const userResult = await baseQuery({
@@ -39,29 +38,40 @@ export const authSlice = baseApiSlice.injectEndpoints({
             }
         }),
 
-        loginUser: builder.query<IResponse, void>({ // data: { username: string; password: string }
+        loginUser: builder.mutation<IResponse, { username: string; password: string }>({
             query: (data) => ({
                 url: 'login',
-                params: data as any,
+                params: data,
+                credentials: "include",
                 method: 'get'
-            })
+            }),
+            invalidatesTags: [{type: 'Auth', id: 'REFRESH_TOKEN'}]
         }),
 
         refreshToken: builder.query<IResponse, void>({
             query: () => ({
                 url: 'refreshtoken',
+                credentials: "include",
                 method: 'post'
-            })
+            }),
+            providesTags: [{type: 'Auth', id: 'REFRESH_TOKEN'}]
         }),
 
-        logoutUser: builder.query<IResponse, void>({
-            query: (data) => ({ // data: { id: string }
+        logoutUser: builder.mutation<IResponse, {id: string}>({
+            query: (data) => ({ 
                 url: 'logout',
                 method:'post',
+                credentials: "include",
                 body: data
             })
         })
     })
 });
 
-export const { useSignUpUserQuery } = authSlice;
+export const { 
+    useSignUpUserMutation, 
+    useLoginUserMutation, 
+    useLogoutUserMutation, 
+    useRefreshTokenQuery, 
+    endpoints: authEndPoints
+} = authSlice;

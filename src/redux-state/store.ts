@@ -6,8 +6,7 @@ import signUpReducer from './auth/signUpSlice';
 import userPreferencesReducer from './preferences/preferencesSlice';
 import alertDialogReducer from './alerts/alert-dialog/alertDialogSlice';
 import toastReducer from './alerts/toast/toastSlice';
-import { baseApiSlice } from './commonApiSlice';
-
+import { baseApiSlice } from './baseApiSlice';
 
 const rootReducer = combineReducers({
     login: loginReducer,
@@ -24,4 +23,5 @@ export const store = configureStore({
 });
 
 export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
 

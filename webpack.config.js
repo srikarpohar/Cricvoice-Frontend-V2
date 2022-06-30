@@ -10,20 +10,8 @@ function createConfig(env) {
   const config = {
     mode : isProd ? 'production' : 'development',
     entry: {
-      shared: {
-        import: "./src/shared/index.tsx"
-      },
-      index: { 
-        import: "./src/index.tsx",
-        dependOn: "shared"
-      },
-      admin: { 
-        import: "./src/admin/index.tsx",
-        dependOn: "shared"
-      },
-      users: { 
-        import: "./src/users/index.tsx",
-        dependOn: "shared"
+      app: {
+        import: "./src/index.tsx"
       }
     },
     output: {
@@ -41,10 +29,12 @@ function createConfig(env) {
           exclude: /node_modules/,
         }, 
         {
-            test: /\.css?$/,
+            test: /\.scss?$/,
             use: [
                 'style-loader',
-                'css-loader'
+                'css-loader',
+                'postcss-loader',
+                'sass-loader'
             ]
         }
       ],
