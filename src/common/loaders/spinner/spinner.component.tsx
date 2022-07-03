@@ -13,9 +13,18 @@ export const Spinner = (props: IProps) => {
 	const [state, setState] = useState<IState>({});
 
 	if(props.show) {
-		return (<div className="w-100 h-100 container d-flex justify-content-center align-items-center">
-			Hello world
-		</div>);
+		return (<div className="screen">
+		<section className="stage">
+			<figure className="ball">
+				<span className="shadow"></span>
+				<span className="line"></span>
+			</figure>
+		</section>
+
+		<section className="ground">
+		</section>
+
+	</div>);
 	} else
 		return null;
 }

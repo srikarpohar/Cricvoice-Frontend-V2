@@ -1,18 +1,22 @@
 import { useState } from "react";
-import { Spinner } from "../../components/loaders/spinner/spinner.component";
+import { Spinner } from "../../common/loaders/spinner/spinner.component";
+import { AppHeader } from "../../components/app-header/app-header";
+import { useRefreshTokenQuery } from "../../redux-state/auth/authApiSlice";
+import "./home.page.scss";
 
-interface IProps{
+interface IProps {}
 
-}
-
-interface IState{
-
-}
+interface IState {}
 
 export const HomePage = (props: IProps) => {
-	const [state, setState] = useState<IState>({});
+  const [state, setState] = useState<IState>({});
 
-	return (<div>
-		<Spinner show={true} />
-	</div>);
-}
+  const { isLoading } = useRefreshTokenQuery();
+
+  return (
+    <div>
+      <Spinner show={isLoading} />
+      <AppHeader />
+    </div>
+  );
+};

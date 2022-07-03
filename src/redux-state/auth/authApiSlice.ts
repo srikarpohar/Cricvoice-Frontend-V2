@@ -4,8 +4,7 @@ import { baseApiSlice } from "../baseApiSlice";
 
 export const authSlice = baseApiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        signUpUser: builder.mutation<IResponse, void>({
-            // args: IUser
+        signUpUser: builder.mutation<IResponse, IUser>({
             queryFn: async (args: any, _api: BaseQueryApi, _extraOptions: any, baseQuery: any) => {
                 const { profilePic, ...userData } = args;
         
@@ -63,7 +62,8 @@ export const authSlice = baseApiSlice.injectEndpoints({
                 method:'post',
                 credentials: "include",
                 body: data
-            })
+            }),
+            invalidatesTags: [{type: 'Auth', id: 'REFRESH_TOKEN'}]
         })
     })
 });
