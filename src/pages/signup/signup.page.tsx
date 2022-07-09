@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Spinner } from "../../common/loaders/spinner/spinner.component";
+import { Spinner } from "@srikarpohar/cricvoice-library";
 import { useLoginUserMutation, useSignUpUserMutation } from "../../redux-state/auth/authApiSlice";
 import './signup.page.scss';
 

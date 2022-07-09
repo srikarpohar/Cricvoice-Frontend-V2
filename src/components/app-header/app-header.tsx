@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { SimpleDropdown } from "../../common/dropdowns/simple-dropdown/simple-dropdown";
-import { Spinner } from "../../common/loaders/spinner/spinner.component";
+import { Spinner, SimpleDropdown } from "@srikarpohar/cricvoice-library";
 import { IUser } from "../../models";
 import { useLogoutUserMutation, useRefreshTokenQuery } from "../../redux-state/auth/authApiSlice";
 import './app-header.scss';
